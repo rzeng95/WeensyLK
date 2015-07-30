@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ <main class="ui page grid">
+
+     <div class="row">
+            <div class="center aligned starter column">
+                <h1 class="ui header">Weensy LolKing</h1>
+                <h4 class="ui header">Only works for NA! :(</h4>
+                <br>
+
+                <div class="ui center aligned grid">
+
+
+                    <div class="three wide column">
+                        <form action="" method="post" class="ui form" id = "form1">
+                            {{ form.hidden_tag() }}
+                            {{ form.openid() }}
+                        </form>
+                    </div>
+                    <div class="two wide column">
+                        <button class="ui button" form="form1">Search</button>
+                    </div>
+
+                </div>
+
+                {% block content2 %}{% endblock %}
+
+                <br><br><br>
+                <div class="ui horizontal divider">About</div>
+                <p>Created by Roland Zeng. <a href="https://rzeng95.github.io" target="_blank">Website</a></p>
+                <p>WeensyLK isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+                    officially involved in producing or managing League of Legends. League of Legends and Riot Games are
+                    trademarks or registered trademarks of Riot Games, Inc. League of Legends &copy; Riot Games, Inc.</p>
+                <p>WeensyLK also has nothing to do with LolKing.net.</p>
+
+
+
+
+            </div>
+     </div>
+
+</main>
+
+{% endblock %}
