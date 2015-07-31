@@ -20,7 +20,7 @@ def index_post():
         if apicall[0] != 200:
             error = apicall[0]
             if error == 404:
-                msg = "Summoner Name does not exist!"
+                msg = "Summoner does not exist!"
             else:
                 msg = "Error " + str(error) + ". Oops!"
             return render_template("index_error.html", form=form, error=msg)

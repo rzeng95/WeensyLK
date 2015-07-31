@@ -12,7 +12,7 @@ def index_post():
         api = RiotAPI(Consts.DEVKEY)
 
         input_text = form.openid.data
-
+	input_text = input_text.lower()
         processed_text = input_text.replace(" ", "")
 
         summonername = {'name': processed_text}
