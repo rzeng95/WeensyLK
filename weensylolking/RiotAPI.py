@@ -1,5 +1,6 @@
 import Consts as Consts
 import requests
+import time
 
 
 class RiotAPI(object):
@@ -12,8 +13,9 @@ class RiotAPI(object):
 
         response = requests.get(Consts.URL['base'].format(proxy=self.region, region=self.region, url=api_url),
                                 params=args)
-        #print response.url
-        #print response.status_code
+
+        time.sleep(0.5)
+
         if response.status_code == 200:
             return response.status_code, response.json()
         else:

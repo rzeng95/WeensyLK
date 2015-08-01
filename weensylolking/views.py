@@ -12,22 +12,37 @@ def index_post():
         api = RiotAPI(Consts.DEVKEY)
 
         input_text = form.openid.data
-	input_text = input_text.lower()
+        input_text = input_text.lower()
         processed_text = input_text.replace(" ", "")
 
         summonername = {'name': processed_text}
         apicall = api.get_summoner_by_name(summonername['name'])
+
         if apicall[0] != 200:
             error = apicall[0]
             if error == 404:
                 msg = "Summoner does not exist!"
+            elif error == 400:
+                msg = "Error " + str(error) + ": Bad Request (Syntax error?)"
+            elif error == 401:
+                msg = "Error " + str(error) + ": Unauthorized API Key"
+            elif error == 404:
+                msg = "Summoner does not exist!"
+            elif error == 429:
+                msg = "Error " + str(error) + ": Rate Limit Exceeded! (Cool off with the requests...)"
+            elif error == 500:
+                msg = "Error " + str(error) + ": Internal server error!"
+            elif error == 403:
+                msg = "Error " + str(error) + ": Could not reach server"
+
             else:
                 msg = "Error " + str(error) + ". Oops!"
+
             return render_template("index_error.html", form=form, error=msg)
 
         summonerdata = apicall[1]
 
-	summonerlevel = summonerdata[summonername['name']]['summonerLevel']
+        summonerlevel = summonerdata[summonername['name']]['summonerLevel']
 
         summonerid = summonerdata[summonername['name']]['id']
 
@@ -35,13 +50,13 @@ def index_post():
 
         outputname = summonerdata[summonername['name']]['name']
 
-	if summonerlevel < 30:
-		msg = "Summoner is not level 30 yet!"
-		return render_template("index_error.html", form=form, error=msg)
+        if summonerlevel < 30:
+            msg = "Summoner is not level 30 yet!"
+            return render_template("index_error.html", form=form, error=msg)
 
-	if summonerrank == 0:
-		msg = "Summoner is unranked!"
-		return render_template("index_error.html", form=form, error=msg)
+        if summonerrank == 0:
+            msg = "Summoner is unranked!"
+            return render_template("index_error.html", form=form, error=msg)
 
         outputtier = summonerrank[str(summonerid)][0]['tier']
         outputdivision = summonerrank[str(summonerid)][0]['entries'][0]['division']
@@ -52,4 +67,3 @@ def index_post():
 
     else:
         return render_template("index_blank.html", form=form)
-
